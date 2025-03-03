@@ -4,7 +4,7 @@
 
 - eslint + prettier lint-staged
 - stylelint
-- vite 构建拓展
+-
 - 时间库 - 常用时间时间方法封装
 - 表格功能封装 （拖拽、表头、）
 - echarts
@@ -44,6 +44,12 @@ pnpm add -D eslint prettier lint-staged husky
 pnpm add -D  eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier eslint-plugin-prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser
 
 pnpm add -D  @commitlint/cli @commitlint/config-conventional
+
+
+pnpm add dotenv
+
+pnpm add -D cross-env dotenv-webpack
+
 ```
 
 - @babel/core @babel/cli @babel/preset-env之间的关系
@@ -55,3 +61,22 @@ ERROR in ./src/main.tsx
 Module build failed (from ./node_modules/.pnpm/ts-loader@9.5.2_typescript@5.7.3_webpack@5.98.0/node_modules/ts-loader/index.js):
 Error: TypeScript emitted no output for /xxx/src/main.tsx.
 ```
+
+### webpack 初始化
+
+### typescript 添加
+
+- react 支持
+
+### react 添加
+
+### eslint 、prettier、husky、lint-staged 、 vscode 配置文件 添加
+
+- 代码提交检查
+- 保存文件自动格式化代码
+
+### 环境变量功能添加
+
+pnpm add -D @types/node
+
+pnpm add -D cross-env dotenv dotenv-webpack

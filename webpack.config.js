@@ -1,8 +1,9 @@
-
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = (env, argv) => {
   // env 用于访问命令行传入的环境变量
@@ -25,16 +26,13 @@ module.exports = (env, argv) => {
       hot: true,
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".js"], // 允许导入这些扩展名的文件
+      extensions: ['.ts', '.tsx', '.js'], // 允许导入这些扩展名的文件
     },
-    module:{
+    module: {
       rules: [
         {
           test: /\.(js|ts|tsx)$/, // 处理 .ts 和 .tsx 文件
-          use: [
-            'babel-loader' ,
-            'ts-loader'
-          ],
+          use: ['babel-loader', 'ts-loader'],
           exclude: /node_modules/,
         },
         {
@@ -63,19 +61,26 @@ module.exports = (env, argv) => {
             'postcss-loader',
           ],
         },
-       
       ],
-    
     },
     plugins: [
+      new Dotenv({
+        path: `./env/.env.${process.env.APP_ENV}`, // 根据 NODE_ENV 加载不同的 .env 文件
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(
+          process.env.NODE_ENV || 'development'
+        ),
+        'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV || 'dev'),
+      }),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: './public/index.html',
       }),
+
       new MiniCssExtractPlugin({
         filename: isProduction ? '[name].[contenthash].css' : '[name].css',
       }),
-    ]
-
-  }
-}
+    ],
+  };
+};

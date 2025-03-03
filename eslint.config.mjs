@@ -22,8 +22,8 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     rules: {
-      // 禁用 react/react-in-jsx-scope 规则
       "react/react-in-jsx-scope": "off",
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 ];

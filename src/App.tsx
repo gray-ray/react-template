@@ -5,6 +5,11 @@ import Page2 from './pages/page2';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 function App() {
+  console.log(
+    process.env.NODE_ENV,
+    process.env.APP_ENV,
+    process.env.REACT_APP_API_URL
+  );
   // https://reactrouter.com/en/main/routers/router-provider
   const router = createBrowserRouter([
     {
