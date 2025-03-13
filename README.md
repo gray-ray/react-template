@@ -1,27 +1,13 @@
-## react pc端页面开发模板
+## react web页面开发模板
 
-### 系统功能规划
+### 项目启动
 
-- eslint + prettier lint-staged
-- stylelint
--
-- 时间库 - 常用时间时间方法封装
-- 表格功能封装 （拖拽、表头、）
-- echarts
-- mockjs
-- cross-env 环境变量支持
-- 表格导出 xlsx
-- ts
+```bash
+# dev mock
+npm run start:dev
+```
 
-- 模块拖拽
-- gantt
-- 国际化
-
-### 部署
-
-### 测试
-
-- docker 部署
+### 项目开发相关
 
 ```bash
 #
@@ -50,17 +36,6 @@ pnpm add dotenv
 
 pnpm add -D cross-env dotenv-webpack
 
-```
-
-- @babel/core @babel/cli @babel/preset-env之间的关系
-
-出现下面错误 如果在webpack rules中使用ts- loader ，那么tsconfig 中"noEmit": true,需要为false
-
-```plain
-ERROR in ./src/main.tsx
-Module build failed (from ./node_modules/.pnpm/ts-loader@9.5.2_typescript@5.7.3_webpack@5.98.0/node_modules/ts-loader/index.js):
-Error: TypeScript emitted no output for /xxx/src/main.tsx.
-```
 
 ### webpack 初始化
 
@@ -80,3 +55,22 @@ Error: TypeScript emitted no output for /xxx/src/main.tsx.
 pnpm add -D @types/node
 
 pnpm add -D cross-env dotenv dotenv-webpack
+
+### react-router
+- 路由配置文件处理 （路由 、权限、 菜单类型）
+### api请求封装、mockjs
+
+- 防抖请求（url相同、 url相同传参也相同）
+- 文件切片上传 下载  todo
+- mockjs
+
+### 登陆（单点、非单点） 权限 （按钮、路由、菜单）
+
+### web worker
+
+### in18 国际化
+
+### 数据埋点
+
+### docker 部署
+```

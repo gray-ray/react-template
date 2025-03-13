@@ -5,16 +5,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
-module.exports = (env, argv) => {
-  // env 用于访问命令行传入的环境变量
-  // argv 用于访问命令行的 webpack 参数，如 --mode
-
-  const isProduction = argv.mode === 'production';
-
+module.exports = () => {
+  const isProduction = process.env.NODE_ENV === 'production';
   return {
     entry: './src/main.tsx',
     output: {
-      filename: 'bundle.js',
+      publicPath: '/', // 根据部署路径调整
+      filename: '[name].[contenthash].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
@@ -24,15 +21,38 @@ module.exports = (env, argv) => {
       compress: true,
       port: 3000,
       hot: true,
+      historyApiFallback: true, // 允许 history 路由模式
+      proxy: [
+        {
+          context: ['/api'],
+          target: 'http://localhost:30001',
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' },
+        },
+      ],
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
     },
     resolve: {
+      alias: {
+        // ts 、webpack配置别名
+        '@': path.resolve(__dirname, 'src'), // 让 @ 指向 src 目录
+      },
       extensions: ['.ts', '.tsx', '.js'], // 允许导入这些扩展名的文件
     },
     module: {
       rules: [
         {
-          test: /\.(js|ts|tsx)$/, // 处理 .ts 和 .tsx 文件
-          use: ['babel-loader', 'ts-loader'],
+          test: /\.tsx?$/, // 处理 .ts 和 .tsx 文件
+          use: ['ts-loader'],
+          exclude: /node_modules/,
+        },
+        {
+          test: /\.js$/, //
+          use: ['babel-loader'],
           exclude: /node_modules/,
         },
         {
@@ -68,9 +88,6 @@ module.exports = (env, argv) => {
         path: `./env/.env.${process.env.APP_ENV}`, // 根据 NODE_ENV 加载不同的 .env 文件
       }),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(
-          process.env.NODE_ENV || 'development'
-        ),
         'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV || 'dev'),
       }),
       new CleanWebpackPlugin(),

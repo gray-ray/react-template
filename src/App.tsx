@@ -1,32 +1,45 @@
 import './App.css';
-import Page1 from './pages/page1';
-import Page2 from './pages/page2';
+import React, { Suspense } from 'react';
 
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router';
+import { AuthProvider, WithAccess } from '@/context/AuthProvider';
+
+import routesConfig from '@/routes/index';
 
 function App() {
-  console.log(
-    process.env.NODE_ENV,
-    process.env.APP_ENV,
-    process.env.REACT_APP_API_URL
-  );
-  // https://reactrouter.com/en/main/routers/router-provider
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      Component: Page1,
-    },
-    {
-      path: '/page1',
-      Component: Page1,
-    },
-    {
-      path: '/page2',
-      Component: Page2,
-    },
-  ]);
+  const renderRoutes = (routes: any[]) => {
+    return routes.map(
+      ({ path, component: Component, redirect, children, access }, index) => {
+        return (
+          <Route
+            key={`${path}_${index}`}
+            path={path}
+            element={
+              redirect ? (
+                <Navigate to={redirect} replace />
+              ) : Component ? (
+                <WithAccess accessKey={access}>
+                  <Suspense fallback={<div>loading...</div>}>
+                    {React.createElement(Component)}
+                  </Suspense>
+                </WithAccess>
+              ) : null
+            }
+          >
+            {children && renderRoutes(children)}
+          </Route>
+        );
+      }
+    );
+  };
 
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>{renderRoutes(routesConfig)}</Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
 export default App;

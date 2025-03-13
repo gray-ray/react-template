@@ -261,3 +261,15 @@ build/
 - **提交前检查**：使用 lint-staged 和 Husky 在提交代码前自动检查和格式化代码。
 
 这样可以帮助你提高代码质量，减少团队协作中的风格冲突。
+
+````
+
+- @babel/core @babel/cli @babel/preset-env之间的关系
+
+出现下面错误 如果在webpack rules中使用ts- loader ，那么tsconfig 中"noEmit": true,需要为false
+
+```plain
+ERROR in ./src/main.tsx
+Module build failed (from ./node_modules/.pnpm/ts-loader@9.5.2_typescript@5.7.3_webpack@5.98.0/node_modules/ts-loader/index.js):
+Error: TypeScript emitted no output for /xxx/src/main.tsx.
+````
