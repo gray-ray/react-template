@@ -1,0 +1,64 @@
+.wrapper {
+  position: relative;
+  // display: flex;
+  // align-items: flex-start;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.columnLeft {
+  position: relative;
+  float: left;
+  max-width: calc(100% - 40px);
+  background-color: #fff;
+}
+.columnRight {
+  box-sizing: border-box;
+  // overflow: auto;
+  background-color: lightblue;
+  width: auto;
+  height: 500px;
+}
+.resize-save {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+
+  height: 500px;
+}
+.resize-bar {
+  // width: 100%;
+  height: inherit;
+  overflow: scroll;
+  cursor: ew-resize;
+  cursor: col-resize;
+  opacity: 0;
+  resize: horizontal !important;
+  height: 500px;
+}
+
+/* 拖拽线 */
+.resize-line {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  border-right: 2px solid #eee;
+  border-left: 1px solid #bbb;
+  pointer-events: none;
+  height: 500px;
+  &:hover {
+    border-right: 2px dashed skyblue;
+    border-left: 1px dashed skyblue;
+  }
+}
+
+.resize-bar::-webkit-scrollbar {
+  width: 310px;
+  height: inherit;
+}

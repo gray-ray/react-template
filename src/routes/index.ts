@@ -20,6 +20,18 @@ export default [
     component: lazy(() => import('@/pages/sub1')),
   },
   {
+    path: '/flow',
+    name: 'flow',
+    access: 'page1',
+    component: lazy(() => import('@/pages/flow')),
+  },
+  {
+    path: '/layouts',
+    name: 'layouts',
+    access: 'page1',
+    component: lazy(() => import('@/pages/layouts')),
+  },
+  {
     path: '/403',
     // name: '403',
     component: lazy(() => import('@/pages/403')),
